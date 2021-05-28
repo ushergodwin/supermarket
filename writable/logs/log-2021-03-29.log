@@ -1,0 +1,48 @@
+CRITICAL - 2021-03-29 00:00:20 -->  route cannot be found while reverse-routing.
+#0 C:\wamp64\www\scit-polls\system\HTTP\RedirectResponse.php(63): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidRedirectRoute('')
+#1 C:\wamp64\www\scit-polls\system\Common.php(918): CodeIgniter\HTTP\RedirectResponse->route(false)
+#2 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(17): redirect('http://scit-pol...')
+#3 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(13): App\Controllers\VoteController->isLoggedIn()
+#4 C:\wamp64\www\scit-polls\system\CodeIgniter.php(908): App\Controllers\VoteController->__construct()
+#5 C:\wamp64\www\scit-polls\system\CodeIgniter.php(422): CodeIgniter\CodeIgniter->createController()
+#6 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-03-29 00:05:59 -->  route cannot be found while reverse-routing.
+#0 C:\wamp64\www\scit-polls\system\HTTP\RedirectResponse.php(63): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidRedirectRoute('')
+#1 C:\wamp64\www\scit-polls\system\Common.php(918): CodeIgniter\HTTP\RedirectResponse->route(false)
+#2 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(17): redirect('Home::index')
+#3 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(13): App\Controllers\VoteController->isLoggedIn()
+#4 C:\wamp64\www\scit-polls\system\CodeIgniter.php(908): App\Controllers\VoteController->__construct()
+#5 C:\wamp64\www\scit-polls\system\CodeIgniter.php(422): CodeIgniter\CodeIgniter->createController()
+#6 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-03-29 08:59:18 -->  route cannot be found while reverse-routing.
+#0 C:\wamp64\www\scit-polls\system\HTTP\RedirectResponse.php(63): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidRedirectRoute('')
+#1 C:\wamp64\www\scit-polls\system\Common.php(918): CodeIgniter\HTTP\RedirectResponse->route(false)
+#2 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(17): redirect('Home::index')
+#3 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(13): App\Controllers\VoteController->isLoggedIn()
+#4 C:\wamp64\www\scit-polls\system\CodeIgniter.php(908): App\Controllers\VoteController->__construct()
+#5 C:\wamp64\www\scit-polls\system\CodeIgniter.php(422): CodeIgniter\CodeIgniter->createController()
+#6 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-03-29 11:42:20 --> Invalid file: ec/candidates.php
+#0 C:\wamp64\www\scit-polls\system\View\View.php(203): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('ec/candidates.p...')
+#1 C:\wamp64\www\scit-polls\system\Common.php(1217): CodeIgniter\View\View->render('ec/candidates', Array, true)
+#2 C:\wamp64\www\scit-polls\app\Controllers\EcController.php(42): view('ec/candidates', Array)
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\EcController->all_candidates()
+#4 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EcController))
+#5 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-03-29 11:42:33 --> Invalid file: ec/candidates.php
+#0 C:\wamp64\www\scit-polls\system\View\View.php(203): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('ec/candidates.p...')
+#1 C:\wamp64\www\scit-polls\system\Common.php(1217): CodeIgniter\View\View->render('ec/candidates', Array, true)
+#2 C:\wamp64\www\scit-polls\app\Controllers\EcController.php(42): view('ec/candidates', Array)
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\EcController->all_candidates()
+#4 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EcController))
+#5 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#7 {main}

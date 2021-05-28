@@ -1,0 +1,16 @@
+CRITICAL - 2021-04-06 13:29:11 --> Attempt to read property "userdata" on null
+#0 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(16): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read...', 'C:\\wamp64\\www\\s...', 16)
+#1 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(13): App\Controllers\VoteController->isLoggedIn()
+#2 C:\wamp64\www\scit-polls\system\CodeIgniter.php(908): App\Controllers\VoteController->__construct()
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(422): CodeIgniter\CodeIgniter->createController()
+#4 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-04-06 22:08:19 --> Attempt to read property "userdata" on null
+#0 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(16): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read...', 'C:\\wamp64\\www\\s...', 16)
+#1 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(13): App\Controllers\VoteController->isLoggedIn()
+#2 C:\wamp64\www\scit-polls\system\CodeIgniter.php(908): App\Controllers\VoteController->__construct()
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(422): CodeIgniter\CodeIgniter->createController()
+#4 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#6 {main}

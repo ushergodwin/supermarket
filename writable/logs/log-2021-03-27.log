@@ -1,0 +1,83 @@
+CRITICAL - 2021-03-27 02:26:34 --> Argument 1 passed to App\Models\VoteModel::has_voted() must be of the type string, null given, called in C:\wamp64\www\scit-polls\app\Controllers\VoteController.php on line 67
+#0 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(67): App\Models\VoteModel->has_voted(NULL, 'Mozilla/5.0 (Wi...', 'p001')
+#1 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\VoteController->candidate('C77529')
+#2 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VoteController))
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-03-27 02:29:34 --> Argument 1 passed to App\Models\VoteModel::has_voted() must be of the type string, null given, called in C:\wamp64\www\scit-polls\app\Controllers\VoteController.php on line 73
+#0 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(73): App\Models\VoteModel->has_voted(NULL, 'Mozilla/5.0 (Wi...', 'p001')
+#1 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\VoteController->candidate('C77529')
+#2 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VoteController))
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-03-27 02:31:07 --> Argument 1 passed to App\Models\VoteModel::has_voted() must be of the type string, null given, called in C:\wamp64\www\scit-polls\app\Controllers\VoteController.php on line 74
+#0 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(74): App\Models\VoteModel->has_voted(NULL, 'Mozilla/5.0 (Wi...', 'p001')
+#1 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\VoteController->candidate('C77529')
+#2 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VoteController))
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-03-27 19:29:54 --> Expected a condition to be passed to the where method first:: 0 given
+#0 C:\wamp64\www\scit-polls\app\Models\AdminModel.php(85): DbModel->getOne('lastname', 'candidate')
+#1 C:\wamp64\www\scit-polls\app\Controllers\EcController.php(24): App\Models\AdminModel->count_votes_for_presidents()
+#2 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\EcController->index()
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EcController))
+#4 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-03-27 19:36:32 --> Expected a condition to be passed to the where method first:: 0 given
+#0 C:\wamp64\www\scit-polls\app\Models\AdminModel.php(84): DbModel->getOne('lastname', 'candidate')
+#1 C:\wamp64\www\scit-polls\app\Controllers\EcController.php(24): App\Models\AdminModel->count_votes_for_presidents()
+#2 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\EcController->index()
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EcController))
+#4 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-03-27 20:54:52 --> syntax error, unexpected ']'
+#0 C:\wamp64\www\scit-polls\system\Autoloader\Autoloader.php(265): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\wamp64\\www\\s...')
+#1 C:\wamp64\www\scit-polls\system\Autoloader\Autoloader.php(228): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Models\\Vote...')
+#2 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Models\\Vote...')
+#3 C:\wamp64\www\scit-polls\app\Controllers\VoteController.php(62): spl_autoload_call('App\\Models\\Vote...')
+#4 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\VoteController->candidate('C89073')
+#5 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VoteController))
+#6 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-03-27 22:39:05 --> Call to undefined method CodeIgniter\Database\MySQLi\Result::get_row()
+#0 C:\wamp64\www\scit-polls\app\Controllers\EcController.php(71): App\Models\AdminModel->votes_for_presidents()
+#1 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\EcController->tally()
+#2 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EcController))
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-03-27 22:47:12 --> Call to undefined method CodeIgniter\Database\MySQLi\Result::getResults()
+#0 C:\wamp64\www\scit-polls\app\Controllers\EcController.php(71): App\Models\AdminModel->votes_for_presidents()
+#1 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\EcController->tally()
+#2 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EcController))
+#3 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-03-27 23:49:59 --> Invalid argument supplied for foreach()
+#0 C:\wamp64\www\scit-polls\app\Views\ec\tally.php(16): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Invalid argumen...', 'C:\\wamp64\\www\\s...', 16, Array)
+#1 C:\wamp64\www\scit-polls\system\View\View.php(220): include('C:\\wamp64\\www\\s...')
+#2 C:\wamp64\www\scit-polls\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\scit-polls\system\Common.php(1217): CodeIgniter\View\View->render('ec/tally', Array, true)
+#4 C:\wamp64\www\scit-polls\app\Controllers\EcController.php(92): view('ec/tally', Array)
+#5 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\EcController->tally()
+#6 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EcController))
+#7 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2021-03-27 23:50:19 --> Invalid argument supplied for foreach()
+#0 C:\wamp64\www\scit-polls\app\Views\ec\tally.php(16): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Invalid argumen...', 'C:\\wamp64\\www\\s...', 16, Array)
+#1 C:\wamp64\www\scit-polls\system\View\View.php(220): include('C:\\wamp64\\www\\s...')
+#2 C:\wamp64\www\scit-polls\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\scit-polls\system\Common.php(1217): CodeIgniter\View\View->render('ec/tally', Array, true)
+#4 C:\wamp64\www\scit-polls\app\Controllers\EcController.php(92): view('ec/tally', Array)
+#5 C:\wamp64\www\scit-polls\system\CodeIgniter.php(936): App\Controllers\EcController->tally()
+#6 C:\wamp64\www\scit-polls\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EcController))
+#7 C:\wamp64\www\scit-polls\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\scit-polls\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#9 {main}
