@@ -494,7 +494,7 @@ class Input {
      * @param $value
      * @return bool
      */
-    public function is_NaN($value) {
+    public function isNaN($value) {
         return is_numeric($value);
     }
 
@@ -502,7 +502,7 @@ class Input {
      * @param $var
      * @return int
      */
-    public function to_Number($var) {
+    public function toNumber($var) {
         return (int)$var;
     }
 
@@ -511,7 +511,7 @@ class Input {
      * @param $var
      * @return object
      */
-    public function to_Object($var) {
+    public function toObject($var) {
         return (object)$var;
     }
 
@@ -521,8 +521,24 @@ class Input {
      * @return string
      */
 
-    public function to_String($var) {
+    public function toString($var) {
         return strval($var);
+    }
+
+        /**
+     * @param array $variable An array of variables to check
+     * @return bool false if all parsed variables are empty and True otherwise if not empty
+     */
+     public function isNotEmpty(array $variable){
+        $feed = true;
+        $len = count($variable);
+        for ($i = 0; $i < $len; $i++) {
+            if (empty(trim($variable[$i]))) {
+                $feed = false;
+                break;
+            }
+        }
+        return $feed;
     }
 }
 
