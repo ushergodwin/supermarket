@@ -1,48 +1,44 @@
 {
-	"name": "codeigniter4/framework",
-	"type": "project",
-	"description": "The CodeIgniter framework v4",
-	"homepage": "https://codeigniter.com",
-	"license": "MIT",
+	"name": "ushergodwin/phaser",
+	"description": "PHP Library",
+    "keywords": ["bluefaces", "phaser", "php", "sql"],
+	"type": "library",
 	"require": {
-		"php": "^7.3||^8.0",
-		"ext-curl": "*",
-		"ext-intl": "*",
-		"ext-json": "*",
-		"ext-mbstring": "*",
-		"kint-php/kint": "^3.3",
-		"laminas/laminas-escaper": "^2.6",
-		"psr/log": "^1.1",
-      "ext-pdo": "*"
-    },
-	"require-dev": {
-		"codeigniter4/codeigniter4-standard": "^1.0",
-		"fakerphp/faker": "^1.9",
-		"mikey179/vfsstream": "^1.6",
-		"phpunit/phpunit": "^9.1",
-		"predis/predis": "^1.1",
-		"squizlabs/php_codesniffer": "^3.3"
+		"php": ">= 7.4",
+		"ext-pdo": "*",
+		"jenssegers/blade": "^1.4",
+		"larapack/dd": "^1.1",
+		"league/booboo": "^2.2",
+		"opis/closure": "^3.6",
+		"phpmailer/phpmailer": "^6.5",
+		"vlucas/phpdotenv": "^5.3"
 	},
-	"suggest": {
-		"ext-fileinfo": "Improves mime type detection for files"
-	},
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Tumuhimbise Usher Godwin",
+			"email": "godwintumuhimbise96@gmail.com"
+		}
+	],
 	"autoload": {
-		"psr-4": {
-			"CodeIgniter\\": "system/"
-		},
-		"exclude-from-classmap": [
-			"**/Database/Migrations/**"
-		]
-	},
-	"scripts": {
-		"post-update-cmd": [
-			"CodeIgniter\\ComposerScripts::postUpdate"
+        "files": [
+			"system/helpers.php"
 		],
-		"test": "phpunit"
-	},
-	"support": {
-		"forum": "http://forum.codeigniter.com/",
-		"source": "https://github.com/codeigniter4/CodeIgniter4",
-		"slack": "https://codeigniterchat.slack.com"
-	}
+		"psr-4": {
+			"System\\": "system/",
+			"App\\": "app/",
+			"System\\App\\": "system/App/"
+		}
+    },
+	"extra": {
+        "branch-alias": {
+            "dev-master": "3.6.x-dev"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+	"minimum-stability": "dev",
+    "prefer-stable": true
 }
