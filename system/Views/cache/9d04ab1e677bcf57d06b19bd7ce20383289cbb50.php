@@ -1,6 +1,6 @@
-@extends('partials.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
     <div class="row justify-content-center mt-2">
         <div class="col-md-12 col-lg-12 col-xl-12">
             <div class="card card-body shadow bg-light">
@@ -9,7 +9,7 @@
                     <div class="col-md-12 col-lg-5 col-xl-5">
                         <div class="card card-body border-0 bg-light">
                             <div class="row justify-content-center">
-                                <img src="{{ assets('imgs/site/locator3.jpg') }} " class="rounded img-responsive"/>
+                                <img src="<?php echo e(assets('imgs/site/locator3.jpg')); ?> " class="rounded img-responsive"/>
                             </div>
                             <div class="row justify-content-center">
                                 <h1 class="font-weight-bold text-success">YOSIL<i class="fas fa-check-circle"></i> </h1>
@@ -22,8 +22,8 @@
                     <div class="col-md-12 col-lg-7 col-xl-7">
                         <h4 class="font-weight-bold text-info">CREATE ACCOUNT</h4>
                         <br/>
-                        <form action="{{ url('home/register') }}" method="post" id="accountForm">
-                            @csrf
+                        <form action="<?php echo e(url('home/register')); ?>" method="post" id="accountForm">
+                            <?php echo csrf_field(); ?>
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <i class="fas fa-envelope text-success"></i> 
@@ -63,7 +63,7 @@
                                 <label for="login" class="sr-only">Login</label>
                                 <input type="hidden" name="create_account" value="1"/>
                                 <button type="submit" id="register-btn" class="btn btn-success w-100">CREATE ACCOUNT</button><br/>
-                                Have an account? <a href="{{ url('/') }}">Login</a>
+                                Have an account? <a href="<?php echo e(url('/')); ?>">Login</a>
                             </div>
                         </form>
                         <div class="response"></div>
@@ -73,4 +73,5 @@
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\supermarket\app\views/account.blade.php ENDPATH**/ ?>

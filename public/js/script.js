@@ -15,6 +15,11 @@
         $(".se-pre-con").fadeOut("slow");;
     });
     $(document).ready(function(){
+        window.setTimeout(function() {
+            $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+                $(this).remove(); 
+            });
+        }, 5000);
         $("#show-password").on('click', function() {
             $("#hide-password").toggleClass('d-none');
             $(this).toggleClass('d-none');
@@ -43,7 +48,7 @@
                 complete: () => {
                     $("#register-btn").attr('disabled', false);
                     $("#register-btn").html("CREATE ACCOUNT");
-                    //$("#accountForm").trigger('reset');
+                    $("#accountForm").trigger('reset');
                 }
             });
         });
