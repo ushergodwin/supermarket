@@ -203,11 +203,6 @@ class DatabaseManager extends QueryBuilder
                 
             }
 
-            if($this->is_like)
-            {
-                $this->addLikeClause($columns);
-            }
-
             
             if(!$this->is_where)
             {
@@ -233,6 +228,12 @@ class DatabaseManager extends QueryBuilder
                 $this->executeOne($stmt);
                 return;
             }
+
+            if($columns !== "*")
+            {
+                $this->query = str_replace("*", $columns, $this->query);
+            }
+            
             $stmt = $this->bindQueryData($this->query, $this->queryData);
             $this->execute($stmt);
             return $this->result();
@@ -578,7 +579,7 @@ class DatabaseManager extends QueryBuilder
     }
 
     /**
-     * Get a single resource from the database as a result of joining 2 models
+     * Get a single resource from storage
      *
      * @param int|string $id
      * @param string $column defaults to id
@@ -587,7 +588,7 @@ class DatabaseManager extends QueryBuilder
     public function find($id, string $column = 'id')
     {
         $this->is_row = true;
-        return $this->where($column, $id)->get();
+        return $this->where($column, $id);
     }
 
     /**
@@ -606,6 +607,58 @@ class DatabaseManager extends QueryBuilder
         return $this->{$name(...$arguments)};
     }
 
+    public static function import(array $file, string $db = '')
+    {
+        $dm = new self;
+        return $dm->_import($file, $db);
+    }
+
+    protected function _import(array $file, string $db = '')
+    {
+        $path = BASE_PATH . "/database/imports/";
+        $executed_files = 0;
+        if(empty($file))
+        {
+            return false;
+        }
+        
+        if(!empty(trim($db)))
+        {
+            $this->database = $db;
+        }
+
+        $newConnection = $this->getNewConnectionInstance();
+
+        $file_count = count($file);
+        for ($i=0; $i < $file_count; $i++) { 
+            $import_file = $path . $file[$i];
+            if(file_exists($import_file))
+            {
+                $query = file_get_contents($import_file);
+                $stmt = $newConnection->prepare($query);
+                try {
+                    $stmt->execute();
+                    $executed_files++;
+                } catch(PDOException $e)
+                {
+                    $this->logError($e->getMessage());
+                }
+            }
+        }
+        $this->createNewConnection();
+        return $executed_files == $file_count;
+    }
+
+    /**
+     * Swicth Database before querying
+     *
+     * @param string $db
+     * @return void
+     */
+    public static function switchDatabase($db)
+    {
+        self::$newdbConnection = $db;
+    }
     
     public function __destruct()
     {

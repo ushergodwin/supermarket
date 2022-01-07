@@ -17,6 +17,7 @@ use System\Database\Schema\Schema;
 
 				$table->id();
 				$table->string('name');
+				$table->string('db_name', 30);
 				$table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
 				$table->date('expires');
 				$table->boolean('expired');

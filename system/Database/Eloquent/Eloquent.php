@@ -21,8 +21,15 @@ class Eloquent extends FluentApi
 
     public static function where(string $column, string $value, string $operator = '=')
     {
-        $table_name = explode("\\", get_called_class());
-        $table_name = self::decamelize($table_name[(count($table_name) - 1)]);
+        $table_name = self::getClassName();
+        
+        if(property_exists(get_called_class(), 'tableName'))
+        {
+          $class = get_called_class();
+          $class = new $class;
+          $table_name = $class->tableName;
+        }
+
         return DB::table($table_name)->where($column, $value, $operator);
     }
 
@@ -35,9 +42,16 @@ class Eloquent extends FluentApi
      */
     public static function find($id, string $column = 'id')
     {
-        $table_name = explode("\\", get_called_class());
-        $table_name = self::decamelize($table_name[(count($table_name) - 1)]);
-        return DB::table($table_name)->row()->where($column, $id)->get();
+        $table_name = self::getClassName();
+        
+        if(property_exists(get_called_class(), 'tableName'))
+        {
+          $class = get_called_class();
+          $class = new $class;
+          $table_name = $class->tableName;
+        }
+
+        return DB::table($table_name)->row()->where($column, $id);
     }
 
 
@@ -48,8 +62,14 @@ class Eloquent extends FluentApi
      */
     public static function all()
     {
-        $table_name = explode("\\", get_called_class());
-        $table_name = self::decamelize($table_name[(count($table_name) - 1)]);
+        $table_name = self::getClassName();
+        
+        if(property_exists(get_called_class(), 'tableName'))
+        {
+          $class = get_called_class();
+          $class = new $class;
+          $table_name = $class->tableName;
+        }
         return DB::table($table_name)->get();
     }
 
@@ -108,13 +128,110 @@ class Eloquent extends FluentApi
         $model = explode(',', $model);
       }
 
-      $table_name = explode("\\", get_called_class());
-      $table_name = self::decamelize($table_name[(count($table_name) - 1)]);
-      $first_table = $model[0];
+      $table_name = self::getClassName();
+
+      if(property_exists(get_called_class(), 'tableName'))
+      {
+        $class = get_called_class();
+        $class = new $class;
+        $table_name = $class->tableName;
+      }
+
+      $first_table = self::getClassName($model[0]);
       return DB::table($table_name)->
-      join(Grammer::plural($first_table), $table_name.".". $first_table . "_id",
+      join(Grammer::plural($first_table), $table_name.".". Grammer::singular($first_table) . "_id",
        Grammer::plural($first_table) . ".id");
 
     }
 
+    /**
+     * Add a JOIN  the models
+     *
+     * @param string $table table to join
+     * @param string $first table.primary key
+     * @param string $second table.forgein key
+     * @param string $join TYPE OF JOIN, defaults to INNER
+     * @return \System\Database\DatabaseManager
+     */
+    public static function join(string $table, string $first, string $second, string $join = 'INNER')
+    {
+      $table_name = self::getClassName();
+
+      if(property_exists(get_called_class(), 'tableName'))
+      {
+        $class = get_called_class();
+        $class = new $class;
+        $table_name = $class->tableName;
+      }
+
+      switch(strtolower($join))
+      {
+        case 'right':
+          return DB::table($table_name)->rightJoin($table, $first, $second);
+          break;
+
+        case 'left': 
+          return DB::table($table_name)->leftJoin($table, $first, $second);
+          break;
+
+        default: 
+          return DB::table($table_name)->join($table, $first, $second);
+      }
+    }
+
+
+    /**
+     * Get models in a specific range
+     *
+     * @param string $column
+     * @param integer $start
+     * @param integer $end
+     * @return \System\Database\DatabaseManager
+     */
+    public static function between(string $column, int $start, int $end)
+    {
+      $table_name = self::getClassName();
+
+      if(property_exists(get_called_class(), 'tableName'))
+      {
+        $class = get_called_class();
+        $class = new $class;
+        $table_name = $class->tableName;
+      }
+
+      return DB::table($table_name)->between($column, $start, $end);
+    }
+
+
+    /**
+     * Select data between the provided range of rows;
+     *
+     * @param integer $start
+     * @param integer $end
+     * @return \System\Database\DatabaseManager
+     */
+    public static function range(int $start, int $end)
+    {
+      $table_name = self::getClassName();
+
+      if(property_exists(get_called_class(), 'tableName'))
+      {
+        $class = get_called_class();
+        $class = new $class;
+        $table_name = $class->tableName;
+      }
+
+      return DB::table($table_name)->range($start, $end);
+    }
+
+
+    protected static function getClassName($namespace = '')
+    {
+      $table_name = explode("\\", get_called_class());
+      if(!empty($namespace))
+      {
+        $table_name = explode("\\", $namespace);
+      }
+      return self::decamelize($table_name[(count($table_name) - 1)]);
+    }
 }

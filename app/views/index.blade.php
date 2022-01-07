@@ -9,7 +9,7 @@
                     <div class="col-md-12 col-lg-6 col-xl-6">
                         <div class="card card-body border-0 bg-light">
                             <div class="row justify-content-center">
-                                <img src="{{assets('imgs/site/locator2.jpg')}}" class="rounded img-responsive"/>
+                                <img src="{{asset('imgs/site/locator2.jpg')}}" class="rounded img-responsive"/>
                             </div>
                             <div class="row justify-content-center">
                                 <h1 class="font-weight-bold text-success">YOSIL<i class="fas fa-check-circle"></i> </h1>
@@ -21,6 +21,7 @@
                         <h4 class="font-weight-bold text-info">LOGIN</h4>
                         <br/>
                         <form action="{{ url('home/auth') }}" method="post" id="loginForm">
+                            @csrf
                             <div class="form-group">
                                 <label for="email" class="sr-only">Email</label>
                                 <i class="fas fa-envelope text-success"></i> <input type="text" name="email" class="form-control-custom bg-light" placeholder="enter your email or phone number" autocomplete="off" required/>

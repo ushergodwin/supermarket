@@ -1,19 +1,16 @@
 <?php
 use League\BooBoo\BooBoo;
+use System\Database\DB;
+use System\File\File;
 use System\Http\CRSF\CRSF;
-use System\Http\Redirect;
+use System\Http\Redirect\Redirect;
 use System\Http\Request\Request;
-use System\Http\Response\Alert;
-use System\Http\Response\Res;
+use System\Http\Response\Alert\Alert;
+use System\Http\Response\Response;
 use System\Password\Password;
 use System\Views\Template;
 
-$root = $_SERVER['DOCUMENT_ROOT'];
-if(empty(trim($root)))
-{
-    $root = @getcwd();
-}
-require_once $root . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname( __DIR__));
 $dotenv->safeLoad();
@@ -64,23 +61,7 @@ if(!function_exists('url'))
         !empty(trim($url)) ? $base .= $url : $base;
         return $base;
     }
-}
-
-
-
-if(!function_exists('APPPATH'))
-{
-    /**
-     * Return the app path
-     *
-     * @return string
-     */
-    function APPPATH()
-    {
-        return $_SERVER['DOCUMENT_ROOT'];
-    }
-}
-
+} 
 
 
 if(!function_exists('array_to_object'))
@@ -130,7 +111,7 @@ if(!function_exists('session'))
      *
      * @param string|array $key The sesion key to get or an associative array of key and value to set in a session
      * @param mixed $default The deafult value to return if the key is not found
-     * @return bool|string
+     * @return mixed
      */
     function session($key, $default =NULL) {
         if (is_array($key)) {
@@ -149,7 +130,7 @@ if(!function_exists('session'))
 
 
 
-if(!function_exists('assets'))
+if(!function_exists('asset'))
 {
     /**
      * Access app assets
@@ -157,7 +138,7 @@ if(!function_exists('assets'))
      * @param string $asset
      * @return string asset url
      */
-    function assets(string $asset){
+    function asset(string $asset){
         return url($asset);
     }
 }
@@ -212,7 +193,11 @@ if(!function_exists('render'))
     function render(string $view, array $context)
     {
         $view = str_replace('.', '/', $view);
-        return Template::view($view, $context);
+        Template::view($view, $context);
+        if(isset($_SESSION['responseMessage']))
+        {
+            unset($_SESSION['responseMessage']);
+        }
     }
 }
 
@@ -222,20 +207,11 @@ if(!function_exists('redirect'))
         
     /**
      * Send an Http Redirect
-     * @param int $status Response status
-     *  
-     *  200 - Success
-     * 
-     * 418 - Infor
-     * 
-     * 419 - Failure
-     * 
-     * 500 - Server error
-     * @return \System\Http\Redirect
+     * @param string $url redirect url
+     * @return \System\Http\Redirect\Redirect
      */
-    function redirect(string $url = '', int $status = 200) {
+    function redirect(string $url = '') {
         $redirect = new Redirect();
-        $redirect->status = $status;
         $redirect->url = $url;
         return $redirect;
     }
@@ -274,7 +250,16 @@ if(!function_exists('csrf_field'))
     {
         $token_id = CRSF::crsfTokenId();
         $token = CRSF::crsfTokenValue();
-        return "<input type='hidden' name='$token_id' value = '$token'>";
+        return "<input type='hidden' name='$token_id' value ='$token'>";
+    }
+}
+
+if(!function_exists('method_field'))
+{
+    function method_field(string $method)
+    {
+        $method = strtoupper($method);
+        return "<input type='hidden' name='_method' value ='$method'>";
     }
 }
 
@@ -307,25 +292,62 @@ if(!function_exists('password'))
 
 /**
  * Response
- *
+ * @return \System\Http\Response\Response
  */
 function response()
 {
-    return new Res();
+    return new Response();
 }
 
 
 
-/**
- * Boostrap 4 Alerts
- *
- * @return \System\Http\Response\Alert
- */
-function alert()
+if(!function_exists('alert'))
 {
-   return new Alert(); 
+     /**
+     * Boostrap 4 Alerts
+     *
+     * @return \System\Http\Response\Alert\Alert
+     */
+    function alert()
+    {
+    return new Alert(); 
+    }
 }
 
-//CONSTANTS;
-define('APPNAME', env('APP_NAME'));
-define('APPPATH', $_SERVER['DOCUMENT_ROOT']);
+if(!function_exists('_token'))
+{
+    /**
+    * Get the CRSF Token
+    */
+    function _token()
+    {
+        return CRSF::crsfTokenValue();
+    }
+}
+
+
+if(!function_exists('files'))
+{
+    /**
+     * File Upload
+     *
+     * @return \System\File\File
+     */
+    function files()
+    {
+        return new File();
+    }
+}
+
+if(!function_exists('DB'))
+{
+    function DB(string $table, string $db = '')
+    {
+        if(!empty($db))
+        {
+            DB::switchDatabase($db);
+        }
+        return DB::table($table);
+    }
+}
+

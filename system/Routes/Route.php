@@ -49,7 +49,7 @@ class Route
             {
                 if(preg_match('/{(.*?)}/', $param) === 1)
                 {
-                    $uri = preg_replace('/{(.*?)}/', "(:any)", $uri);
+                    $uri = preg_replace('/{(.*?)}/', "(:args)", $uri);
                 }
             }
             $route::map_uri($uri, $callback);
@@ -103,21 +103,28 @@ class Route
      *
      * @param string $name
      * @param string $controller
+     * @param callable $appendURI An associative array of request method and the callback method to be added to the resource route.
+     * 
+     * The call back takes in 2 arguments, $uri and the $class name
      * @return \System\Routes\Route
      */
-    public static function resource(string $name, string $controller) {
-        $resourse = new self;
-        $resourse::get($name, [$controller, 'index'])->name($name."."."index");
-        $resourse::get($name.'/create', [$controller, 'create'])->name($name."."."create");
+    public static function resource(string $name, string $controller, $appendURI = NULL) {
+        $resource = new self;
+        $resource::get($name, [$controller, 'index'])->name($name."."."index");
+        $resource::get($name.'/create', [$controller, 'create'])->name($name."."."create");
 
         if ((new self)->requestMethod() == 'post'){
-            $resourse::post($name.'/destroy', [$controller, 'destroy'])->name($name."."."destroy");
-            $resourse::post($name.'/update', [$controller, 'update'])->name($name."."."update");
-            $resourse::post($name.'/store', [$controller, 'store'])->name($name."."."store");
+            $resource::put($name, [$controller, 'update'])->name($name."."."update");
+            $resource::post($name.'/store', [$controller, 'store'])->name($name."."."store");
         }
-        $resourse::get($name.'/{id}/edit', [$controller, 'edit::$1'])->name($name.".$1"."edit");
-        $resourse::get($name.'/show/{id}', [$controller, 'edit::$1'])->name($name.".$1"."edit");
-        return $resourse; 
+        $resource::get($name.'/{id}/edit', [$controller, 'edit'])->name($name.".$1"."edit");
+        $resource::get($name.'/{id}', [$controller, 'edit'])->name($name.".$1"."edit");
+        $resource::delete($name.'/{id}', [$controller, 'destroy'])->name($name."."."destroy");
+        if(is_callable($appendURI))
+        {
+            call_user_func_array($appendURI, [$name, $controller]);
+        }
+        return $resource; 
     }
 
     
@@ -165,5 +172,61 @@ class Route
     {
         $uri = str_replace('.', '/', $name);
         session([$name => $uri]);
+    }
+
+        /**
+     * Make a PUT Request Route map
+     *
+     * @param string $uri The request URI
+     * @param callable|array $callback Callback class and method || Callback function
+     * @return \System\Routes\Route
+     */
+    static function put(string $uri, $callback) {
+        $route = new self;
+        if($route::requestMethod() == "post") {
+
+            if(isset($_POST['_method']) and strtoupper($_POST['_method']) == "PUT"
+             || strtoupper($_POST['_method']) == "DELETE")
+            {
+                $route::map_uri($uri, $callback);  
+            }
+        }
+        return $route;
+    }
+
+
+    /**
+     * Make a DELETE Request Route map
+     *
+     * @param string $uri The request URI
+     * @param callable|array $callback Callback class and method || Callback function
+     * @return \System\Routes\Route
+     */
+    static function delete(string $uri, $callback) {
+        $route = new self;
+
+        if(isset($_REQUEST['_method']) and strtoupper($_REQUEST['_method']) == "DELETE")
+        {
+            if(preg_match('/{(.*?)}/', $uri) === 1)
+            {
+                    $uri = preg_replace('/{(.*?)}/', "(:args)", $uri);
+            }
+               
+            $route::map_uri($uri, $callback);
+                
+        }
+        return $route;
+    }
+
+    protected function appendURI(array $methods, $controller, $name, Route $resource)
+    {
+        foreach ($methods as $key => $method) {
+            # code...
+            $key = strtolower($key);
+            if($key == 'get')
+            {
+                $resource::get($name, [$controller, $method])->name($name.".".$method);   
+            }
+        }
     }
 }

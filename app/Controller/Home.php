@@ -1,8 +1,8 @@
 <?php
+namespace App\Controller;
 use App\Controller\BaseController;
 use App\Models\User;
 use System\Http\Request\Request;
-
 class Home extends BaseController
 {
     public function index() {
