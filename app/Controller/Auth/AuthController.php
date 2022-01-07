@@ -10,7 +10,7 @@ class AuthController extends BaseController
 
     public function login(Request $request)
     {
-        $user = User::find($request->email, 'email');
+        $user = User::find($request->email, 'email')->get();
 
         if(empty($user))
         {
@@ -27,14 +27,14 @@ class AuthController extends BaseController
             "lname" => $user->lname,
             "photo" => $user->img_url,
             "id" => $user->id,
-            "roles" => explode(',', $user->roles)
+            "roles" => explode(',', $user->roles),
+            "account_type" => $user->account
         ];
 
         $message = [
             "alert" => "Authenticated successfully",
             "redirect" => url('user/supermarkets')
         ];
-        session($userSession);
 
         switch ($user->account) {
             case 'super':
@@ -42,13 +42,13 @@ class AuthController extends BaseController
                 break;
             case 'admin':
                 $supermarket = Supermarket::where('user_id', $user->id)->value('name');
-                session(["supermarket" => $supermarket]);
-                $message['redirect'] = url("supermarket/$supermarket/admin/");
+                $userSession["supermarket"] = $supermarket;
+                $message['redirect'] = url("supermarket/admin");
                 break;
             default:
                 $message["redirect"] = url('user/supermarkets');
-                return response()->json(200, $message);
-                break;
         }
+        session(['user' => array_to_object($userSession)]);
+        return response()->json(200, $message);
     }
  }

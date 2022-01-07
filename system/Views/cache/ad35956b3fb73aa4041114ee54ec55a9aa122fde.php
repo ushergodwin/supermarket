@@ -2,40 +2,63 @@
     <div class="sidebar__menu-group">
        <ul class="sidebar_nav">
           <li class="menu-title">
-             <span>Product Categories</span>
+             <span>DASHBOARD</span>
           </li>
           <li class="has-child ">
              <a href="#">
-             <span data-feather="shopping-cart" class="nav-icon"></span>
-             <span class="menu-text">Men</span>
+             <span data-feather="user" class="nav-icon"></span>
+             <span class="menu-text">Users</span>
              <span class="toggle-icon"></span>
              </a>
              <ul>
-               
+               <li>
+                  <a href="<?php echo e(url('users')); ?>" class="">List All</a>
+               </li>
+               <li>
+                  <a href="<?php echo e(route('users.create')); ?>" class="">Add</a>
+               </li>
              </ul>
           </li>
           <li class="has-child ">
              <a href="#">
              <span data-feather="user" class="nav-icon"></span>
-             <span class="menu-text">Women </span>
+             <span class="menu-text">Supermarkets </span>
              <span class="toggle-icon"></span>
              </a>
              <ul>
-               
+                  <li>
+                     <a href="<?php echo e(url('supermarkets')); ?>" class="">List All</a>
+                  </li>
+                  <li>
+                     <a href="<?php echo e(route('supermarkets.create')); ?>" class="">Add New</a>
+                  </li>
              </ul>
           </li>
  
           <li class="has-child">
              <a href="#">
              <span data-feather="layout" class="nav-icon"></span>
-             <span class="menu-text">Unisex</span>
+             <span class="menu-text">Supermarket Items</span>
              <span class="toggle-icon"></span>
              </a>
              <ul>
-
+                  <li>
+                     <a href="<?php echo e(url('supermarket-items')); ?>" class="">List All</a>
+                  </li>
+                  <li>
+                     <a href="<?php echo e(route('supermarket-items.create')); ?>" class="">Add New &nbsp; <i class="fa fa-plus-circle"></i></a>
+                  </li>
+                  <li>
+                     <a href="<?php echo e(url('supermarket-items/searched')); ?>" class="">Searched&nbsp;<i class="fa fa-search"></i> </a>
+                  </li>
              </ul>
           </li>
- 
+          <li>
+            <a href="<?php echo e(route('supermarket-items.categories')); ?>">
+            <span data-feather="settings" class="nav-icon"></span>
+            <span class="menu-text">Categories</span>
+            </a>
+         </li>
           <li>
              <a href="">
              <span data-feather="settings" class="nav-icon"></span>

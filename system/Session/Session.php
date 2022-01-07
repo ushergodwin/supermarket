@@ -53,9 +53,9 @@ class Session
     /**
      * @param string $session_name The name of the registered session
      * @param string|callable $default  The default value|function to return|call
-     * @return string A string of session data
+     * @return mixed session data
      */
-    public function get(string $session_name, string|callable $default = '') {
+    public function get(string $session_name, $default = '') {
         if (empty(trim($_SESSION[$session_name]))) {
             if (is_callable($default)){
                 return call_user_func($default);

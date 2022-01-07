@@ -1,7 +1,7 @@
 <?php
 namespace System\Models;
 
-require_once APPPATH().'/vendor/autoload.php';
+require_once BASE_PATH . '/vendor/autoload.php';
 
 use System\Database\Eloquent\Eloquent;
 
@@ -11,8 +11,12 @@ class Model extends Eloquent
 
     public function __construct($massive_data = [])
     {
-        $table_name = explode("\\", strtolower(get_called_class()));
+        $table_name = explode("\\", get_called_class());
         $this->table = self::decamelize($table_name[(count($table_name) - 1)]);
+        if(property_exists($this, 'tableName'))
+        {
+          $this->table = $this->tableName;
+        }
         $this->massive_data = $massive_data;
     }
 

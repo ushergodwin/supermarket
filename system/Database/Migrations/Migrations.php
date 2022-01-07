@@ -15,7 +15,6 @@ $db_config = (object) $config;
 
 use PDO;
 use PDOException;
-use System\Database\Grammer\Grammer;
 use System\Database\Schema\ColumnDefination;
 
 define('SERVER_NAME', $db_config->DB_HOST);
@@ -41,7 +40,7 @@ class Migrations extends ColumnDefination
 
     private static $dir;
 
-    public static $version = '1.0';
+    public static $version = '1.0.1';
 
     private static $is_file;
 
@@ -53,13 +52,16 @@ class Migrations extends ColumnDefination
         self::$db = null;
     }
 
-    private static function connect() {
+    private static function connect(bool $is_db = false, $new_db = '') {
         $mysql_host = SERVER_NAME;
-        $mysql_database = DATABASE_NAME;
+        $mysql_database = empty(trim($new_db)) ? DATABASE_NAME : $new_db;
         $mysql_user = USER_NAME;
         $mysql_password = PASSWORD;
         try {
-            $conn = new PDO("mysql:host=$mysql_host;", $mysql_user, $mysql_password);
+            if($is_db)
+            {
+                return new PDO("mysql:host=$mysql_host;", $mysql_user, $mysql_password);
+            }
             $conn = new PDO("mysql:host=$mysql_host;dbname=$mysql_database", $mysql_user, $mysql_password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$server_version = $conn->getAttribute(PDO::ATTR_SERVER_VERSION);
@@ -70,7 +72,7 @@ class Migrations extends ColumnDefination
         return $conn;
     }
 
-    public static function getMigrationInstance()
+    public static function getMigrationInstance($new_db = '')
     {
         return self::connect();
     }
@@ -88,6 +90,18 @@ class Migrations extends ColumnDefination
     public static function config(array $config, bool $is_file = false) {
         self::$config = (object) $config;
         self::$is_file = $is_file;
+    }
+
+    public static function createDatabase(string $dbname = DATABASE_NAME)
+    {
+        $db = self::connect(true);
+        try {
+            $db->exec("CREATE DATABASE $dbname");
+            echo "\e[0;32;40mCreated database \e[0m" . $dbname . "\n";
+        } catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        }
     }
 
     /**

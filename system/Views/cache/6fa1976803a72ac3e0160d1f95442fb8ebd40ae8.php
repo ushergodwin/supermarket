@@ -10,8 +10,8 @@
         <title><?php echo e(APP_NAME . " | ". $title); ?></title>
         <meta name="description" content="Phase php library">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="png/x-image" href="<?php echo e(assets('imgs/icons/favicon.ico')); ?>"/>
-        <link rel="stylesheet" href="<?php echo e(assets('bootstrap/css/bootstrap.min.css')); ?>"/>
+        <link rel="icon" type="png/x-image" href="<?php echo e(asset('imgs/icons/favicon.ico')); ?>"/>
+        <link rel="stylesheet" href="<?php echo e(asset('bootstrap/css/bootstrap.min.css')); ?>"/>
     </head>
     <body class="bg-light">
         <!--[if lt IE 7]>

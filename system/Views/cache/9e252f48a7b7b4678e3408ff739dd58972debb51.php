@@ -10,9 +10,9 @@
         <title><?php echo e(APP_NAME . " | " . $title); ?></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" type="image/png" href="<?php echo e(assets('imgs/icons/favicon.ico')); ?>"/>
+        <link rel="shortcut icon" type="image/png" href="<?php echo e(asset('imgs/icons/favicon.ico')); ?>"/>
         <?php echo $__env->make('partials.admin.styles', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo e(assets('css/style.css')); ?>"/>
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/style.css')); ?>"/>
         <?php echo $__env->yieldContent('css'); ?>
     </head>
     <body>

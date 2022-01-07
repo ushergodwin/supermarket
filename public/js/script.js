@@ -36,7 +36,7 @@
             let url = $(this).attr('action');
             $.ajax({
                 url: url,
-                type: 'post',
+                type: 'POST',
                 data: $(this).serializeArray(),
                 beforeSend: ()=> {
                     $("#register-btn").attr("disabled", true);
@@ -48,7 +48,7 @@
                 complete: () => {
                     $("#register-btn").attr('disabled', false);
                     $("#register-btn").html("CREATE ACCOUNT");
-                    $("#accountForm").trigger('reset');
+                    //$("#accountForm").trigger('reset');
                 }
             });
         });

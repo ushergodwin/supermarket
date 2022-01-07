@@ -4,17 +4,25 @@
 use System\Controller\Make;
 use System\Database\Grammer\Grammer;
 use System\Database\Migrations\Migrations;
-
+define('BASE_PATH', __DIR__);
 require_once __DIR__. '/system/Database/Migrations/Migrations.php';
 
 Migrations::__init__(__DIR__);
-
 //command line arguments
 
 $options = $argv;
 
  if(!empty($options)) {
+     
     switch ($options[1]) {
+        case 'make:db':
+            if(isset($options[2]))
+            {
+                return Migrations::createDatabase($options[2]);
+            }
+            Migrations::createDatabase();
+            break;
+
         case ($options[1] === '--version' || $options[1] === "-v"):
             echo "\e[0;32;40mv".Migrations::$version . "\e[0m";
             break;
@@ -67,7 +75,7 @@ $options = $argv;
             Migrations::groupMigrations();
             break;
 
-        case 'migrate:list':
+        case 'migrate:status':
             Migrations::listMigrations();
             break;
 
@@ -92,7 +100,7 @@ $options = $argv;
 
         case 'cache:clear': 
             echo "\e[0;33;40mClearing cache...\e[0m " . "\n";
-            foreach(glob('system/Template/cache/' . '*') as $file) {
+            foreach(glob('system/Views/cache/' . '*') as $file) {
                 unlink($file);
             }
             echo "\e[0;32;40mCache cleared. \e[0m\n";

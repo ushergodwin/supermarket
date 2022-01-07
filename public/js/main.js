@@ -58,7 +58,7 @@
     /* Replace all SVG images with inline SVG */
     $("img.svg").each(function() {
         var $img = $(this);
-        var imgID = $img.attr("id");
+        var imgID = window.location.origin + $img.attr("id");
         var imgClass = $img.attr("class");
         var imgURL = $img.attr("src");
         $.get(

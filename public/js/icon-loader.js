@@ -1,4 +1,4 @@
-$.getJSON("http://127.0.0.1:8000/json/icons.json", function (data) {
+$.getJSON(window.location.origin +"/json/icons.json", function (data) {
   const { faIcons } = data;
   const { laIcons } = data;
   const feIcons = data.featherIcons;

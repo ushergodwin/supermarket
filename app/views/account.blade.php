@@ -9,7 +9,7 @@
                     <div class="col-md-12 col-lg-5 col-xl-5">
                         <div class="card card-body border-0 bg-light">
                             <div class="row justify-content-center">
-                                <img src="{{ assets('imgs/site/locator3.jpg') }} " class="rounded img-responsive"/>
+                                <img src="{{ asset('imgs/site/locator3.jpg') }} " class="rounded img-responsive"/>
                             </div>
                             <div class="row justify-content-center">
                                 <h1 class="font-weight-bold text-success">YOSIL<i class="fas fa-check-circle"></i> </h1>
@@ -22,7 +22,7 @@
                     <div class="col-md-12 col-lg-7 col-xl-7">
                         <h4 class="font-weight-bold text-info">CREATE ACCOUNT</h4>
                         <br/>
-                        <form action="{{ url('home/register') }}" method="post" id="accountForm">
+                        <form action="{{ url('home/register') }}" method="POST" id="accountForm">
                             @csrf
                             <div class="form-group">
                                 <label for="email">Email</label>
@@ -63,7 +63,7 @@
                                 <label for="login" class="sr-only">Login</label>
                                 <input type="hidden" name="create_account" value="1"/>
                                 <button type="submit" id="register-btn" class="btn btn-success w-100">CREATE ACCOUNT</button><br/>
-                                Have an account? <a href="{{ url('/') }}">Login</a>
+                                Have an account? <a href="{{ url() }}">Login</a>
                             </div>
                         </form>
                         <div class="response"></div>

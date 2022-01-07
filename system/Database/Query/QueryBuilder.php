@@ -32,6 +32,8 @@ class QueryBuilder extends Transactions implements Query
 
     protected static $lastInsertId = 0;
 
+    protected $orderby = '';
+
     public function mainTable(string $table)
     {
         $this->query = "SELECT * FROM $table "; 
@@ -56,11 +58,20 @@ class QueryBuilder extends Transactions implements Query
     protected function addWhereClause(string $columns)
     {
         $sub_query = "SELECT * FROM {$this->tableName} AND ";
+        if(strpos($this->query, "DISTINCT") !== false)
+        {//dd($columns);
+            $sub_query = "SELECT DISTINCT {$columns} FROM {$this->tableName} AND ";
+            $sub_query_len = strlen($sub_query);
+            $this->query = substr($this->query, $sub_query_len, strlen($this->query) - $sub_query_len);
+    
+            $this->query = "SELECT DISTINCT {$columns} FROM {$this->tableName} WHERE " . $this->query;
+            return $this->query = trim($this->query);
+        }
         $sub_query_len = strlen($sub_query);
         $this->query = substr($this->query, $sub_query_len, strlen($this->query) - $sub_query_len);
 
         $this->query = "SELECT $columns FROM {$this->tableName} WHERE " . $this->query;
-        $this->query = trim($this->query);
+        return $this->query = trim($this->query);
     }
 
     public function orWhere(string $column, $value, string $operator = '=')
@@ -169,6 +180,11 @@ class QueryBuilder extends Transactions implements Query
                 $this->is_where = true;
                 $this->query .= " AND {$this->tableName}.deleted_at IS NULL";
             }
+        }
+
+        if(!empty(trim($this->orderby)))
+        {
+            $this->query .= $this->orderby;
         }
     }
 
@@ -288,19 +304,15 @@ class QueryBuilder extends Transactions implements Query
         $this->query = trim($this->query);
     }
 
-    public function distinct(?string $column = null)
+    public function distinct(?string $column)
     {
-        if($column == null)
-        {
-            $column = "*";
-        }
         $this->query = "SELECT DISTINCT $column FROM {$this->tableName} ";
         return $this;
     }
 
     public function orderBy(string $column, string $order = "ASC")
     {
-        $this->query .= " ORDER BY $column $order ";
+        $this->orderby .= " ORDER BY $column $order ";
         return $this;
     }
 
