@@ -68,7 +68,7 @@ class DashboardController extends BaseController
         {
             if(date("Y-m-d", strtotime($no_of_visits[0]->last_visit)) !== date("Y-m-d"))
             {
-                SupermarketVisitor::find('visitor_email', $current_user)->update(['no_of_visits' => ($no_of_visits[0]->no_of_visits + 1), 'visited_on' => date("Y-m-d H:i:s")]);
+                SupermarketVisitor::find($current_user, 'visitor_email')->update(['no_of_visits' => ($no_of_visits[0]->no_of_visits + 1), 'visited_on' => date("Y-m-d H:i:s")]);
             }
         }else {
             $visitor = new SupermarketVisitor($supermarket_visitor);
@@ -180,7 +180,7 @@ class DashboardController extends BaseController
         {
             if(date("Y-m-d", strtotime($no_of_visits[0]->last_visit)) !== date("Y-m-d"))
             {
-                SupermarketVisitor::find('visitor_email', $current_user)->update(['no_of_visits' => ($no_of_visits[0]->no_of_visits + 1), 'visited_on' => date("Y-m-d H:i:s")]);
+                SupermarketVisitor::find($current_user, 'visitor_email')->update(['no_of_visits' => ($no_of_visits[0]->no_of_visits + 1), 'visited_on' => date("Y-m-d H:i:s")]);
             }
         }else {
             $visitor = new SupermarketVisitor($supermarket_visitor);
