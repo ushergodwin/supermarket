@@ -76,9 +76,9 @@
             success: (response) => {
                 let responseDiv = $(".response");
                 if (response.status === 200) {
-                    responseDiv.addClass('alert alert-success fade show w-50')
-                    responseDiv.html("<i class='fas fa-check-circle text-success'></i> " + response.message.alert)
-                    window.location.href = response.message.redirect;
+                    responseDiv.addClass('alert alert-success fade show')
+                    responseDiv.html("<i class='fas fa-check-circle text-success'></i> " + response.message)
+                    window.location.href = response.redirect;
                 } else {
                     responseDiv.addClass('alert alert-warning fade show');
                     responseDiv.html("<i class='fas fa-exclamation-triangle text-warning'></i> " + response.message)
@@ -86,6 +86,30 @@
             },
             complete: () => {
                 $(".login-btn").attr("disabled", false);
+            }
+        });
+    });
+
+
+    //activateAccount
+    $("#activate-btn").on('click', function() {
+        const url = $("#activateAccount").data('url')
+        $.ajax({
+            url: url + '/' + $("#amount").val(),
+            type: "GET",
+            beforeSend: () => {
+                $(this).html("<span class='spinner-border spinner-border-sm text-light'></span> Initiating...")
+                $(this).attr("disabled", true)
+            },
+            success: (response) => {
+                if(response.status === 200)
+                {
+                    $("#activateAccount").trigger('submit');
+                }else {
+                    $(".response").html(response.message);
+                    $(this).html("<i class='fas fa-check-circle'></i> Activate Account")
+                    $(this).attr("disabled", false)
+                }
             }
         });
     });

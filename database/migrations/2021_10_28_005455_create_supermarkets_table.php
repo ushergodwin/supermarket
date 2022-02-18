@@ -21,6 +21,7 @@ use System\Database\Schema\Schema;
 				$table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
 				$table->date('expires');
 				$table->boolean('expired');
+				$table->integer('fee');
 				$table->timestamps(); 
 			}); 
 

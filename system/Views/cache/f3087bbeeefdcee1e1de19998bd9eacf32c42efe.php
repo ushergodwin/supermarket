@@ -25,7 +25,23 @@
         <?php $__env->startSection('content'); ?>
             
         <?php echo $__env->yieldSection(); ?>
-        
+            <!-- logout modal -->
+    <div id="logoutUser" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><i class="fa fa-exclamation-triangle text-warning"></i> &nbsp;Confirmation</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>Do you want to close your session?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href= window.location.origin + '/user/logout'">Yes, Log Me Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
         <?php echo $__env->make('partials.admin.scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php echo $__env->yieldContent('scripts'); ?>
     </body>

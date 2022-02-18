@@ -3,30 +3,52 @@
     <section class="contents">
         <section class="container-fluid">
             <div class="row mt-2">
-                <?php $__currentLoopData = $collection; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="col-lg-4">
-                        <div class="card mt-3">
-                            <div class="card-body shadow">
-                                <h4 class="font-weight-bold"><?php echo e($item->name); ?></h4>
-                                <h6 class="mt-1">Price: UGX <?php echo e(number_format($item->price, 2)); ?> /=</h6>
-                                <h6 class="mt-1 text-muted">Location: Column <?php echo e($item->column_number); ?>, on the <?php echo e(strtoupper(str_replace('-', ' ', $item->position))); ?> side.</h6>
-                            </div>
-                            <div class="card-footer">
-                                <a href="javascript:;" class="stretched-link shopping-list"
-                                data-item_name="<?php echo e($item->name); ?>"
-                                data-item_price="<?php echo e($item->price); ?>"
-                                data-item_column_number="<?php echo e($item->column_number); ?>"
-                                data-item_position="<?php echo e($item->position); ?>"
-                                data-supermarket="<?php echo e($supermarket); ?>"
-                                data-url="<?php echo e(url('user/dashboard/shopping-list')); ?>"
-                                data-_token="<?php echo e(_token()); ?>"> Add Items to Shopping List
-                                    <span data-feather="shopping-cart" class="nav-icon"></span> 
-                                </a>
-                            </div>
+                <div class="col-lg-4">
+                    <div class="jumbotron py-1">
+                        <h5><u>Categories</u></h5>
+                        <div class="row">
+                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <div class="col-lg-12 mt-2">
+                                    <div class="alert alert-info">
+                                        <h6><?php echo e($item->category); ?></h6>
+                                        <a href="<?php echo e(url('user/dashboard/supermarket/' . $db . '/' . $item->category)); ?>" class="stretched-link">
+
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
-                        
                     </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+                <div class="col-lg-8">
+                    <h5><u>All ITEMS IN <?php echo e($supermarket); ?></u></h5>
+                    <div class="row">
+                        <?php $__currentLoopData = $collection; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="col-lg-4">
+                                <div class="card mt-3">
+                                    <div class="card-body shadow">
+                                        <h4 class="font-weight-bold"><?php echo e($item->name); ?></h4>
+                                        <h6 class="mt-1">Price: UGX <?php echo e(number_format($item->price, 2)); ?> /=</h6>
+                                        <h6 class="mt-1 text-muted">Location: Column <?php echo e($item->column_number); ?>, on the <?php echo e(strtoupper(str_replace('-', ' ', $item->position))); ?> side.</h6>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="javascript:;" class="stretched-link shopping-list"
+                                        data-item_name="<?php echo e($item->name); ?>"
+                                        data-item_price="<?php echo e($item->price); ?>"
+                                        data-item_column_number="<?php echo e($item->column_number); ?>"
+                                        data-item_position="<?php echo e($item->position); ?>"
+                                        data-supermarket="<?php echo e($supermarket); ?>"
+                                        data-url="<?php echo e(url('user/dashboard/shopping-list')); ?>"
+                                        data-_token="<?php echo e(_token()); ?>"> Add Items to Shopping List
+                                            <span data-feather="shopping-cart" class="nav-icon"></span> 
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>
+                </div>
             </div>
             <div class="fixed-bottom response"></div>
         </section>

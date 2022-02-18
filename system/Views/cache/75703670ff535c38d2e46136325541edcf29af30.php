@@ -4,7 +4,7 @@
             <a href="" class="sidebar-toggle">
                 <img class="svg" src="<?php echo e(asset('img/svg/bars.svg')); ?>" alt="img">
             </a>
-            <a class="navbar-brand" href="#"><img class="svg dark" src="<?php echo e(asset('img/Logo_Dark.svg')); ?>" alt="">
+            <a class="navbar-brand" href="<?php echo e(url('admin/dashboard')); ?>"><img class="svg dark" src="<?php echo e(asset('img/Logo_Dark.svg')); ?>" alt="">
                 <img class="light" src="<?php echo e(asset('img/Logo_white.png')); ?> " alt="">
             </a>
         </div>
@@ -237,8 +237,8 @@
                                     <img src="<?php echo e(asset('img/author-nav.jpg')); ?>" alt="" class="rounded-circle">
                                 </div>
                                 <div>
-                                    
-                                    <span>UI Designer</span>
+                                    <h6><?php echo e(session('user')->fname . " " . session('user')->lname); ?></h6>
+                                    <span>User</span>
                                 </div>
                             </div>
                             <div class="nav-author__options bg-dark">
@@ -264,8 +264,7 @@
                                             <span data-feather="bell"></span> Help</a>
                                     </li>
                                 </ul>
-                                <a href="<?php echo e(url('logout')); ?>" class="nav-author__signout" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                <a href="#logoutUser" class="nav-author__signout" data-toggle="modal">
                                     <span data-feather="log-out"></span> Sign Out</a>
                             </div>
                         </div>

@@ -1,11 +1,21 @@
 <?php 
  namespace App\Controller; 
  use App\Controller\BaseController;
+use App\Models\Supermarket;
 use App\Models\User;
 use \System\Http\Request\Request; 
 
  class UserController extends BaseController 
  { 
+
+		public function __construct()
+		{
+			if(!$this->session()->contains('user'))
+			{
+				return redirect();
+			}
+			
+		}
  		/**
 		* Display a listing of the resource.
 		* @return \System\Http\Response\Response
@@ -14,7 +24,7 @@ use \System\Http\Request\Request;
 		{
 			$context = [
 				'title' => 'DASHBOARD',
-				'users' => User::all()
+				'users' => User::where('account', 'customer')->get()
 			];
 	
 			return render('admin.super.users', $context);
@@ -42,13 +52,21 @@ use \System\Http\Request\Request;
 		public function store(Request $request)
 		{
 			$user = new User();
+			$account = $request->post('account_type');
 			$user->email = $request->body->email;
 			$user->fname = $request->body->fname;
 			$user->lname = $request->body->lname;
 			$user->phone = $request->body->phone;
-			$password = trim(strtolower(substr($request->body->lname, 0, 1)) . strtolower($request->body->fname));
+			$password = $request->body->phone;
 			$user->password = password()->hash($password);
-			$user->account = 'super';
+			$user->account = $account;
+
+			if($account == 'admin')
+			{
+				$supermarket_id = Supermarket::where('db_name', session('user')->supermarket)->value('id');
+				$user->has_supermarket = $supermarket_id;
+			}
+
 			if(!empty($request->body->roles)){
 
 				$user->roles = implode(',', $request->body->roles);
@@ -92,7 +110,12 @@ use \System\Http\Request\Request;
 		public function edit($id)
 		{
 			// 
+			$context = [
+				'title' => "DASHBOARD | EDIT USER ",
+				'collection' => User::find($id)->get()
+			];
 
+			return render('admin/super/edit_user', $context);
  		}
 
 		/**
@@ -103,7 +126,34 @@ use \System\Http\Request\Request;
 		public function update(Request $request)
 		{
 			// 
+			$id = $request->post('id');
+			$updateData = $request->except([crsf(), 'id', 'password', 'password2', 'roles']);
+			$roles = implode(',', $_POST['roles']);
+			$updateData['roles'] = $roles;
 
+			//password
+			$password = $request->post('password');
+			$password2 = $request->post('password2');
+
+			if(!empty($password))
+			{
+				if($password2 !== $password)
+				{
+					return response()->send(202, alert()->danger("The new passwords do not match!"));
+				}
+				session_unset();
+				session_destroy();
+				
+				$updateData['password'] = password()->hash($password);
+			}
+
+
+			if(!User::find($id)->update($updateData))
+			{
+				return response()->send(202, alert()->danger("User details not updated. Please try again later!"));
+			}
+			
+			return response()->send(200, alert()->success("User details updated successfully."));
  		}
 
 		/**
@@ -113,8 +163,43 @@ use \System\Http\Request\Request;
 		*/
 		public function destroy(Request $request)
 		{
-			// 
+			$id = $request->post('id');
+
+			if(!User::find($id)->delete())
+			{
+				return response()->json(202, "User not deleted!");
+			}
+
+			return response()->json(200, "User deleted successfully");
 
  		}
+
+		 public function coAdminUsers()
+		 {
+			 $users = User::where('account', 'super')->get();
+			
+			 if(session('user')->account_type == 'admin')
+			 {
+				 $supermarket_id = Supermarket::where('db_name', session('user')->supermarket)->value('id');
+				 $users = User::where('account', 'admin')->where('has_supermarket', $supermarket_id)->get();
+			 }
+			$context = [
+				'title' => 'DASHBOARD | CO ADMIN USERS',
+				'users' => $users
+			];
+	
+			return render('admin.super.co_admin', $context);
+		 }
+
+
+		 public function supermarketAdmins()
+		 {
+			$context = [
+				'title' => 'DASHBOARD | SUPERMARKET ADMIN',
+				'users' => User::where('account', 'admin')->get()
+			];
+	
+			return render('admin.super.sup_admin', $context);
+		 }
 
 } 

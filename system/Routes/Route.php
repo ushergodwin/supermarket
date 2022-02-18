@@ -114,11 +114,11 @@ class Route
         $resource::get($name.'/create', [$controller, 'create'])->name($name."."."create");
 
         if ((new self)->requestMethod() == 'post'){
-            $resource::put($name, [$controller, 'update'])->name($name."."."update");
+            $resource::put($name, [$controller, 'update'])->name($name."."."index");
             $resource::post($name.'/store', [$controller, 'store'])->name($name."."."store");
         }
         $resource::get($name.'/{id}/edit', [$controller, 'edit'])->name($name.".$1"."edit");
-        $resource::get($name.'/{id}', [$controller, 'edit'])->name($name.".$1"."edit");
+        $resource::get($name.'/{id}', [$controller, 'show'])->name($name.".$1"."show");
         $resource::delete($name.'/{id}', [$controller, 'destroy'])->name($name."."."destroy");
         if(is_callable($appendURI))
         {
@@ -170,7 +170,12 @@ class Route
      */
     public function name(string $name)
     {
+
         $uri = str_replace('.', '/', $name);
+        if(strpos($name, 'index') !== false)
+        {
+            $uri = explode('.', $name)[0];
+        }
         session([$name => $uri]);
     }
 
@@ -184,10 +189,17 @@ class Route
     static function put(string $uri, $callback) {
         $route = new self;
         if($route::requestMethod() == "post") {
-
+            
             if(isset($_POST['_method']) and strtoupper($_POST['_method']) == "PUT"
              || strtoupper($_POST['_method']) == "DELETE")
             {
+                
+                if (is_array($callback)) {
+                    $class = $callback[0];
+                    $method = $callback[1];
+                    $class = explode('::', $class)[0];
+                    $callback = $class."::".$method;
+                }
                 $route::map_uri($uri, $callback);  
             }
         }
@@ -211,7 +223,15 @@ class Route
             {
                     $uri = preg_replace('/{(.*?)}/', "(:args)", $uri);
             }
-               
+            
+            
+            if (is_array($callback)) {
+                $class = $callback[0];
+                $method = $callback[1];
+                $class = explode('::', $class)[0];
+                $callback = $class."::".$method;
+            }
+            
             $route::map_uri($uri, $callback);
                 
         }

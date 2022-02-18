@@ -24,6 +24,8 @@ use System\Database\Schema\Schema;
 				$table->string('password');
 				$table->string('img_url')->nullable();
 				$table->bigText('roles')->default('view items,');
+				$table->integer('has_supermarket')->nullable()->default(NULL);
+				$table->string('status', 10)->default('offline');
 				$table->timestamps(); 
 			}); 
 

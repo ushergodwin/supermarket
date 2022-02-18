@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2021 at 08:36 PM
+-- Generation Time: Jan 07, 2022 at 03:50 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.27
 
@@ -31,6 +31,7 @@ CREATE TABLE `searched_items` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `item_id` bigint(20) UNSIGNED NOT NULL,
   `search_status` varchar(100) NOT NULL DEFAULT 'found',
+  `searched_item_name` varchar(50) DEFAULT NULL,
   `number_of_searches` int(11) NOT NULL DEFAULT 1,
   `created_at` datetime DEFAULT current_timestamp(),
   `update_at` datetime DEFAULT NULL
@@ -44,8 +45,7 @@ CREATE TABLE `searched_items` (
 -- Indexes for table `searched_items`
 --
 ALTER TABLE `searched_items`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_searched_items_item_id` (`item_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables

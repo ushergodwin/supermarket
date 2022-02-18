@@ -22,10 +22,10 @@
             <span class="menu-text">Shopping Lists</span>
             </a>
          </li>
-          <li>
-            <a href="<?php echo e(url('supermarket-items/categories')); ?>">
-            <span data-feather="settings" class="nav-icon"></span>
-            <span class="menu-text">Categories</span>
+         <li>
+            <a href="<?php echo e(url('user/dashboard/notebooks')); ?>">
+            <span data-feather="book-open" class="nav-icon"></span>
+            <span class="menu-text">Notebook</span>
             </a>
          </li>
           <li>

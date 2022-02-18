@@ -1,0 +1,40 @@
+.chat,.char-request,.online {
+    height: 450px;
+    overflow-y: auto;
+}
+.chat-body {
+    overflow-y: auto!important;
+}
+.send-btn {
+    height: 40px !important;
+    margin-top: 10px !important;
+}
+.chat-body .sender{
+    background-color: #9cf065;
+    border: 2px solid #9cf065;
+    border-radius: 5px;
+    
+}
+.chat-body .receiver{
+    display: grid;
+    align-items: left;
+    justify-items: left;
+    background-color: #f0f7eb;
+    border: 2px solid #f0f7eb;
+    border-radius: 5px;
+    padding: 5px;
+    width: 300px;
+    
+}
+.sender + .receiver {
+    margin-top: 30px;
+}
+
+.receiver + .sender{
+    margin-top: 10px;
+}
+
+#message {
+    border: 1px solid rgb(8, 194, 8)!important;
+    border-radius: 4px!important;
+}

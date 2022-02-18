@@ -81,13 +81,25 @@
                                                     </div>
                                                 <?php endif; ?>
                                             </td>
-                                            <td><a href="<?php echo e(url('supermarkets/'.$item->id)); ?>" title="view more details of <?php echo e($item->name); ?>" data-toggle="tooltip" class="view"><span data-feather="eye"></span> </a></td>
-                                            <td><a href="<?php echo e(url('supermarkets/'.$item->id . '/edit')); ?>" title="edit details of <?php echo e($item->name); ?>" data-toggle="tooltip"><i class="fas fa-pen-square text-primary"></i> </a></td>
-                                            <td><a href="javascript:void(0)" data-url="<?php echo e(url('supermarket/'.$item->id)); ?>" data-resource-id="<?php echo e($item->id); ?>" title="Delete <?php echo e($item->name); ?>?" data-toggle="tooltip" class="delete-resource-btn" ><i class="fas fa-trash-alt text-danger"></i> </a></td>
+                                            <?php if(in_array('edit-supermarkets', session('user')->roles)): ?>
+                                                <td><a href="<?php echo e(url('supermarkets/'.$item->id . '/edit')); ?>" title="edit details of <?php echo e($item->name); ?>"><i class="fas fa-pen-square text-primary"></i> </a></td>
+                                            <?php endif; ?>
+                                            <?php if(in_array('delete-supermarkets', session('user')->roles)): ?>
+                                                <td><a href="javascript:void(0)" 
+                                                    data-url="<?php echo e(url('supermarkets/delete')); ?>" 
+                                                    data-resource_id="<?php echo e($item->id); ?>"
+                                                    data-user_id="<?php echo e($item->user_id); ?>"
+                                                    data-request_method="POST"
+                                                     title="Delete <?php echo e($item->name); ?>?"
+                                                     class="delete-resource" 
+                                                     onclick="return confirm('Delete Supermarket? All data of this supermarket will be lost!')"><i class="fas fa-trash-alt text-danger"></i> </a></td>
+                                            <?php endif; ?>
+                                            
                                             </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
                                 </table>
+                                <div class="response"></div>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ asset('vendor_assets/css/bootstrap/'.(session('layout')=='rtl' ? 'bootstrap-rtl.css' : 'bootstrap.css')) }}">
+<link rel="stylesheet" href="{{ asset('vendor_assets/css/bootstrap/bootstrap.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/animate.css') }}"/>
 <link rel="stylesheet" href="{{ asset('vendor_assets/css/daterangepicker.css') }}">
 <link rel="stylesheet" href="{{ asset('vendor_assets/css/fontawesome.css') }}">

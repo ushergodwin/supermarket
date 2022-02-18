@@ -23,7 +23,7 @@
                 <div class="col-lg-12">
                     <div class="card card-horizontal card-default card-md mb-4">
                         <div class="card-body py-md-30">
-                            <form action="{{ url('users/store') }}" method="post" id="addUserForm">
+                            <form action="{{ url('users/co-admin/store') }}" method="post" id="addUserForm">
                                 @csrf
                                 <div class="form-group">
                                     <label for="email">Email</label>
@@ -57,13 +57,32 @@
                                         <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox user-role checkbox" value="edit-users"/> Edit Users</div>
                                         <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox user-role checkbox" value="delete-users"/> Delete Users</div>
                                     </div>
-                                    <h6 class="mt-3"><input type="checkbox" class="custom-checkbox checkbox" onclick="$('.sup-role').not(this).prop('checked', this.checked)"/> Supermarkets</h6>
-                                    <div class="d-flex">
-                                        <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="add-supermarket"/> Add Supermarkets</div>
-                                        <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="view-supermaket"/> View Supermarkets</div>
-                                        <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="edit-supermarkets"/> Edit Supermarkets</div>
-                                        <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="delete-supermarkets"/> Delete Supermarkets</div>
-                                    </div>
+                                    @if(session('user')->account_type == 'super')
+                                        <h6 class="mt-3"><input type="checkbox" class="custom-checkbox checkbox" onclick="$('.sup-role').not(this).prop('checked', this.checked)"/> Supermarkets</h6>
+                                        <div class="d-flex">
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="add-supermarkets"/> Add Supermarkets</div>
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="view-supermarkets"/> View Supermarkets</div>
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="edit-supermarkets"/> Edit Supermarkets</div>
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="delete-supermarkets"/> Delete Supermarkets</div>
+                                        </div>
+                                        <input type="hidden" name="account_type" value="super"/>
+                                    @endif
+                                    @if(session('user')->account_type == 'admin')
+                                        <h6 class="mt-3"><input type="checkbox" class="custom-checkbox checkbox" onclick="$('.sup-role').not(this).prop('checked', this.checked)"/> Supermarket Items</h6>
+                                        <div class="d-flex">
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="add-supermarket-items"/> Add Supermarket Items</div>
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="view-supermarket-items"/> View Supermarket Items</div>
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="edit-supermarket-items"/> Edit Supermarket Items</div>
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox sup-role checkbox" value="delete-supermarket-items"/> Delete Supermarket Items</div>
+                                        </div>
+                                        <h6 class="mt-3"><input type="checkbox" class="custom-checkbox checkbox" onclick="$('.searched-role').not(this).prop('checked', this.checked)"/> Searched Items</h6>
+                                        <div class="d-flex">
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox searched-role checkbox" value="view-most-searched-items"/> Vew Most Searched Items</div>
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox searched-role checkbox" value="view-found-searched-items"/> View Found Searched Items</div>
+                                            <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox searched-role checkbox" value="view-not-found-searched-items"/> View Not Found Searched Items</div>
+                                        </div>
+                                        <input type="hidden" name="account_type" value="admin"/>
+                                    @endif
                                     <h6 class="mt-3">Dasboard Charts</h6>
                                     <div class="ml-3"><input type="checkbox" name="roles[]" class="custom-checkbox checkbox" value="view-charts"/> View Charts</div>
                                 </div>
@@ -82,6 +101,6 @@
 @endsection
 @section('scripts')
     <script>
-        sendRequest({form: 'addUserForm', btn: 'add-user-btn'});
+        request({form: 'addUserForm', btn: 'add-user-btn'});
     </script>
 @endsection

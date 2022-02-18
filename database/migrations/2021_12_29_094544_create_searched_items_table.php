@@ -16,8 +16,9 @@ use System\Database\Schema\Schema;
 			Schema::create('searched_items', function (BluePrint $table) {
 
 				$table->id();
-				$table->foreignId('item_id')->constrained('supermarket_items')->cascadeOnDelete();
+				$table->integer('item_id');
 				$table->string('search_status')->default('found');
+				$table->string('searched_item_name', 50)->nullable();
 				$table->integer('number_of_searches')->default(1);
 				$table->timestamps(); 
 

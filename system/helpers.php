@@ -224,9 +224,10 @@ if(!function_exists('old'))
      * Get the previously submitted data after a request as a requet of calling redirect()->back()->withInput()
      *
      * @param string $key
+     * @param mixed $default
      * @return string
      */
-    function old(string $key = '')
+    function old(string $key = '', $default = '')
     {
         $old = isset($_SESSION['responseData']) ? session('responseData') : [];
         $old_key = array_keys($old);
@@ -239,7 +240,7 @@ if(!function_exists('old'))
                 unset($_SESSION['responseData']);
             }
         }
-        return isset($old[$key]) ? $old[$key] : '';
+        return isset($old[$key]) ? $old[$key] : $default;
 
     }
 }

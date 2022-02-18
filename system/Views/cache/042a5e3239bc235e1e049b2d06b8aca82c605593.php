@@ -30,7 +30,6 @@
                             <div class="col-md-10">
                                 <input type="search" id="search" class="form-control" placeholder="search patient"
                                        onkeyup="filterTable('search', 'patientTable')">
-                                <?php echo csrf_field(); ?>
                             </div>
                         </div>
                         <div class="card-body py-md-30">
@@ -52,7 +51,7 @@
                                             <td>
                                                 <div class="d-flex">
                                                 <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                                    <a href="<?php echo e(url('supermarket-items/'.$item->id)); ?>" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('<?php echo e(asset('img/tm6.png')); ?>'); background-size: cover;"></a>
+                                                    <a href="<?php echo e(url('supermarket-items/'.$item->id)); ?>" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('<?php echo e(asset('imgs/supermarket/items/'.$item->image)); ?>'); background-size: cover;"></a>
                                                 </div>
                                                 <div class="userDatatable-inline-title">
                                                     <a href="<?php echo e(url('supermarket-items/'.$item->id)); ?>" class="text-dark fw-500">
@@ -76,17 +75,31 @@
                                                 <td>
                                                     <a href="<?php echo e(url('supermarket-items/'.$item->id)); ?>" title="view more details of <?php echo e($item->name); ?>" class="view"><span data-feather="eye"></span> </a>
                                                 </td>
-                                                <td>
-                                                    <a href="<?php echo e(url('supermarket-items/'.$item->id . '/edit')); ?>" title="edit details of <?php echo e($item->name); ?>"><i class="fas fa-pen-square text-primary"></i> </a>
-                                                </td>
-                                                <td>
-                                                    <a href="javascript:void(0)" data-url="<?php echo e(url('supermarket-items/'.$item->id)); ?>" data-resource-id="<?php echo e($item->id); ?>" title="Delete <?php echo e($item->name); ?>?" class="delete-resource-btn" ><i class="fas fa-trash-alt text-danger"></i> </a>
-                                                </td>
+                                                <?php if(in_array('edit-supermarket-items', session('user')->roles)): ?>
+                                                    <td>
+                                                        <a href="<?php echo e(url('supermarket-items/'.$item->id . '/edit')); ?>" title="edit details of <?php echo e($item->name); ?>"><i class="fas fa-pen-square text-primary"></i> </a>
+                                                    </td>
+                                                <?php endif; ?>
+                                                <?php if(in_array('delete-supermarket-items', session('user')->roles)): ?>
+                                                    <td>
+                                                        <a href="javascript:void(0)" 
+                                                        data-url="<?php echo e(url('supermarket-items/'.$item->id)); ?>" 
+                                                        data-resource-id="<?php echo e($item->id); ?>" 
+                                                        data-request_method="GET"
+                                                        data-_method="DELETE"
+                                                        title="Delete <?php echo e($item->name); ?>?" 
+                                                        class="delete-resource" >
+                                                            <i class="fas fa-trash-alt text-danger"></i> 
+                                                        </a>
+                                                        <?php echo csrf_field(); ?>
+                                                    </td>
+                                                <?php endif; ?>
                                             </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="response"></div>
                         </div>
                     </div>
                     <!-- ends: .card -->
