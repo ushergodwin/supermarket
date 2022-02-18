@@ -14,14 +14,25 @@ jQuery(()=> {
     });
     //destroy resource
     $(".delete-resource").on('click', function(){
+        const req_type = typeof $(this).data('request_method') == 'undefined' ? 'POST' :$(this).data('request_method')
+        let req_data = {}
+        if(req_type == 'POST')
+        {
+            req_data = $(this).data()
+            if(typeof $(this).data('_token') == 'undefined')
+            {
+                let token = {
+                    _token: $("input[name='_token']").val()
+                }
+
+                req_data = {...req_data, ...token}
+            }
+        }
+        
         $.ajax({
             url: $(this).data('url'),
-            type: 'POST',
-            data: {
-                delete: true, 
-                id: $(this).data('resource-id'),
-                _token: $("input[name='_token']").val(),
-            },
+            type: req_type,
+            data: req_data,
             beforeSend: ()=> {
                 $(this).html("<span class='spinner-border spinner-border-sm'></span>deleting...");
                 $(this).attr('disabled', true);
@@ -43,6 +54,35 @@ jQuery(()=> {
         let input = "<div class='col-lg-4 mt-2'><input type='text' name='categories[]' class='form-control ml-1'/></div>";
         $('#other-foods').append(input);
     });
+
+    // check supermarket exipry
+    var request_uri = window.location.origin
+    if(document.getElementById('usersBarCanvas'))
+    {
+        $.ajax({
+            url: request_uri + '/supermarkets/expired',
+            type: 'GET',
+            data: {check_expiry: true},
+            beforeSend: () => {
+                 $(".sup-expiry").addClass('alert alert-info').html("<span class='spinner-border spinner-border-sm'></span> &nbsp; checking supermarkets exipry...")
+            }
+        }).done((response) => {
+            setTimeout(() => {
+                $(".sup-expiry").html(response)
+            }, 2000);
+            setTimeout(() => {
+                $(".sup-expiry").fadeOut(5000)
+            }, 5000);
+        });
+    }
+    $.ajax({
+        type: 'GET',
+        url: request_uri + '/user/online',
+        data: {}
+    }).done(response => {
+        $(".users-active-status").html(response)
+    });
+
 });
 
 function filterTable(input='search', table='') {
@@ -63,8 +103,8 @@ function request(settings = settingsData)
         let requestData = new FormData(this);
         if(settings.hasOwnProperty('images'))
         {
-            if(settings.image.length >= 1) {
-                for (const input of settings.image) {
+            if(settings.images.length >= 1) {
+                for (const input of settings.images) {
                     requestData.append(input.name, input.value)
                 }   
             }

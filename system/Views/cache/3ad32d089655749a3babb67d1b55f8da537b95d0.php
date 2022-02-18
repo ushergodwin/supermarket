@@ -31,7 +31,7 @@
                                         <div class="form-group">
                                             <label for="name">Supermarket Name</label>
                                             <input type="text" name="name" class="form-control" 
-                                            placeholder="enter your email or phone number" autocomplete="off"
+                                            placeholder="name of the supermarket" autocomplete="off"
                                             value="<?php echo e(old('name')); ?>" required/>
                                         </div>
                                     </div>
@@ -49,11 +49,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="expiry_date" class="w-100">
-                                        Expires On 
-                                        <input type="date" name="expiry_date" class="form-control" value="<?php echo e(old('expiry_date')); ?>"/>
-                                    </label>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="fee" class="w-100">
+                                                Subscription Fee 
+                                                <input type="number" name="fee" class="form-control" value="<?php echo e(old('fee', 100000)); ?>"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="expiry_date" class="w-100">
+                                                Expires On 
+                                                <input type="date" name="expiry_date" class="form-control" value="<?php echo e(old('expiry_date', date("Y-m-d", strtotime("+1 month")))); ?>"/>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" id="add-supermarket-btn" class="btn btn-success">ADD SUPERMARKET ACCOUNT</button><br/>

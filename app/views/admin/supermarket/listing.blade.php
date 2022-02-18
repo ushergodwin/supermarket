@@ -30,7 +30,6 @@
                             <div class="col-md-10">
                                 <input type="search" id="search" class="form-control" placeholder="search patient"
                                        onkeyup="filterTable('search', 'patientTable')">
-                                @csrf
                             </div>
                         </div>
                         <div class="card-body py-md-30">
@@ -52,7 +51,7 @@
                                             <td>
                                                 <div class="d-flex">
                                                 <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                                    <a href="{{ url('supermarket-items/'.$item->id) }}" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('{{ asset('img/tm6.png') }}'); background-size: cover;"></a>
+                                                    <a href="{{ url('supermarket-items/'.$item->id) }}" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('{{ asset('imgs/supermarket/items/'.$item->image) }}'); background-size: cover;"></a>
                                                 </div>
                                                 <div class="userDatatable-inline-title">
                                                     <a href="{{ url('supermarket-items/'.$item->id) }}" class="text-dark fw-500">
@@ -75,17 +74,31 @@
                                                 <td>
                                                     <a href="{{ url('supermarket-items/'.$item->id) }}" title="view more details of {{ $item->name }}" class="view"><span data-feather="eye"></span> </a>
                                                 </td>
-                                                <td>
-                                                    <a href="{{ url('supermarket-items/'.$item->id . '/edit') }}" title="edit details of {{ $item->name }}"><i class="fas fa-pen-square text-primary"></i> </a>
-                                                </td>
-                                                <td>
-                                                    <a href="javascript:void(0)" data-url="{{ url('supermarket-items/'.$item->id) }}" data-resource-id="{{$item->id}}" title="Delete {{ $item->name }}?" class="delete-resource-btn" ><i class="fas fa-trash-alt text-danger"></i> </a>
-                                                </td>
+                                                @if(in_array('edit-supermarket-items', session('user')->roles))
+                                                    <td>
+                                                        <a href="{{ url('supermarket-items/'.$item->id . '/edit') }}" title="edit details of {{ $item->name }}"><i class="fas fa-pen-square text-primary"></i> </a>
+                                                    </td>
+                                                @endif
+                                                @if(in_array('delete-supermarket-items', session('user')->roles))
+                                                    <td>
+                                                        <a href="javascript:void(0)" 
+                                                        data-url="{{ url('supermarket-items/'.$item->id) }}" 
+                                                        data-resource-id="{{$item->id}}" 
+                                                        data-request_method="GET"
+                                                        data-_method="DELETE"
+                                                        title="Delete {{ $item->name }}?" 
+                                                        class="delete-resource" >
+                                                            <i class="fas fa-trash-alt text-danger"></i> 
+                                                        </a>
+                                                        @csrf
+                                                    </td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="response"></div>
                         </div>
                     </div>
                     <!-- ends: .card -->

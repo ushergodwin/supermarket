@@ -38,17 +38,34 @@
                 </div>
 
                 <div class="col-lg-8">
-                    <h6 class="mr-5">Most Searched</h6>
+                    <h6 class="mr-5">Most Searched Categories</h6>
                     <div class="card card-horizontal card-default card-md mb-4 mt-2">
-                        <div class="row mt-3 mr-2 ml-2">
-                            @foreach ($collection as $item)
-                                <div class="col-md-4 mt-1">
-                                    <div class="card card-body shadow mb-3 bg-success">
-                                        {{ $item->category}}
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Name</th>
+                                    <th>No of Searches</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(!empty($most_searched_categories))
+                                    @php
+                                        $i = 0;
+                                    @endphp
+                                    @foreach ($most_searched_categories as $item)
+                                        @php
+                                            $i++;
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $i }}</td>
+                                            <td>{{ $item->key }}</td>
+                                            <td>{{ $item->value}}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                     <!-- ends: .card -->
                 </div>

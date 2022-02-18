@@ -18,11 +18,12 @@
                                         <h5>List Items</h5>
                                         <?php
                                             $shoppingListItems = DB('shopping_list_items')->where('shopping_list_id', $item->id)->get();
-                                            $total = 0;
+                                            $total = $no = 0;
                                         ?>
                                         <?php if(!empty($shoppingListItems)): ?>
                                             <table class="table table-striped table-bordered table-dark">
                                                 <thead>
+                                                    <th>No</th>
                                                     <th>Item Name</th>
                                                     <th>Price</th>
                                                     <th>Location</th>
@@ -32,24 +33,31 @@
                                                     <?php $__currentLoopData = $shoppingListItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $items): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <?php
                                                             $total += $items->item_price;
+                                                            $no++;
                                                         ?>
                                                         <tr>
+                                                            <td><?php echo e($no); ?></td>
                                                             <td><?php echo e($items->item_name); ?></td>
-                                                            <td><?php echo e($items->item_price); ?></td>
+                                                            <td><?php echo e(number_format($items->item_price, 2)); ?></td>
                                                             <td><?php echo e("column " .  $items->item_column_number . " " . $items->item_position); ?></td>
                                                             <td><?php echo e($items->supermarket); ?></td>
                                                         </tr>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                     <tr>
-                                                        <td>TOTAL COST </td>
-                                                        <th colspan="4"><?php echo e(number_format($total, 2)); ?></th>
+                                                        <td colspan="4">TOTAL COST </td>
+                                                        <th>UGX: <?php echo e(number_format($total, 2)); ?></th>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         <?php endif; ?>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="button" class="btn btn-success">Mark List Shopped and Completed</button>
+                                        <button type="button" class="btn btn-<?php echo e($item->list_status == 'active' ? 'primary' : 'success'); ?>"
+                                        id="diactivate-list" 
+                                        data-list_id="<?php echo e($item->id); ?>"
+                                        data-url="<?php echo e(url('user/dashboard/lists/diactivate')); ?>"
+                                        data-_token="<?php echo e(_token()); ?>"
+                                         <?php echo e($item->list_status == 'active' ? '' : 'disabled'); ?>><i class="fa fa-check-circle"></i> <?php echo e($item->list_status == 'active' ? "Mark List Shopped" : "List Shopped"); ?></button>
                                     </div>
                                 </div>
                             </div>
@@ -99,6 +107,7 @@
 <?php $__env->startSection('scripts'); ?>
     <script>
         request({form: 'listForm', btn: 'list-btn'});
+        elementDataRequest({selector: 'id', el: 'diactivate-list', method: 'POST'})
     </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('partials.user.base', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\supermarket\app\views/user/shopping_list.blade.php ENDPATH**/ ?>

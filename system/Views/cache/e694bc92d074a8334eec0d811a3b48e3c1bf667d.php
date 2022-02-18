@@ -5,15 +5,14 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-main">
-                        <h4 class="text-capitalize breadcrumb-title">All Users</h4>
+                        <h4 class="text-capitalize breadcrumb-title">Supermarket Visitors</h4>
                         <div class="breadcrumb-action justify-content-center flex-wrap">
                             <div class="action-btn">
                                 <div class="form-group mb-0">
                                 </div>
                             </div>
                             <div class="action-btn">
-                                <a href="<?php echo e(url('users/create')); ?>" class="btn btn-sm btn-primary btn-add">
-                                    <i class="la la-plus"></i> Add New Users</a>
+                                
                             </div>
                         </div>
                     </div>
@@ -24,12 +23,12 @@
                     <div class="card card-horizontal card-default card-md mb-4">
                         <div class="row mt-5 mr-2 ml-2">
                             <div class="col-md-2 mt-3">
-                                <h6 class="mr-5">Users Listing</h6>
+                                <h6 class="mr-5">Listing</h6>
                             </div>
                             <div class="col-md-10">
-                                <input type="search" id="search" class="form-control" placeholder="search patient"
+                                <input type="search" id="search" class="form-control" placeholder="search supermarket visitors"
                                        onkeyup="filterTable('search', 'patientTable')">
-                                <?php echo csrf_field(); ?>
+                                <input type="hidden" name="_token" value="<?php echo e(_token()); ?>">
                             </div>
                         </div>
                         <div class="card-body py-md-30">
@@ -37,10 +36,10 @@
                                 <table class="table table-bordered table-striped" id="patientTable">
                                     <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Visitor</th>
+                                        <th>Email</th>
                                         <th>Joined On</th>
-                                        <th>Status</th>
-                                        <th colspan="3"></th>
+                                        <th></th>
 
                                     </tr>
                                     </thead>
@@ -64,22 +63,12 @@
                                                 </div>
                                                 </div>
                                             </td>
+                                                <td>
+                                                    <a href="mailto:<?php echo e($item->email); ?>"> <?php echo e($item->email); ?> </a>
+                                                </td>
                                                 <td><?php echo e(date('M d, Y', strtotime($item->created_at))); ?></td>
                                                 <td>
-                                                    <?php if(empty($item->deleted_at)): ?>
-                                                        <div class="userDatatable-content d-inline-block">
-                                                            <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
-                                                        </div>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <a href="<?php echo e(url('users/'.$item->id)); ?>" title="view more details of <?php echo e($item->fname . " ".$item->lname); ?>" class="view"><span data-feather="eye"></span> </a>
-                                                </td>
-                                                <td>
-                                                    <a href="<?php echo e(url('users/'.$item->id . '/edit')); ?>" title="edit details of <?php echo e($item->fname . " ".$item->lname); ?>"><i class="fas fa-pen-square text-primary"></i> </a>
-                                                </td>
-                                                <td>
-                                                    <a href="javascript:void(0)" data-url="<?php echo e(url('users/'.$item->id)); ?>" data-resource-id="<?php echo e($item->id); ?>" title="Delete <?php echo e($item->fname . " ".$item->lname); ?>?" class="delete-resource-btn" ><i class="fas fa-trash-alt text-danger"></i> </a>
+                                                    <a href="javascript:void(0)" data-url="<?php echo e(url('users/delete/')); ?>" data-resource-id="<?php echo e($item->id); ?>" title="Delete <?php echo e($item->fname . " ".$item->lname); ?>?" class="delete-resource-btn" ><i class="fas fa-trash-alt text-danger"></i> </a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

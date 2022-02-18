@@ -28,12 +28,13 @@ class AuthController extends BaseController
             "photo" => $user->img_url,
             "id" => $user->id,
             "roles" => explode(',', $user->roles),
-            "account_type" => $user->account
+            "account_type" => $user->account,
+            "phone_no" => $user->phone
         ];
 
         $message = [
-            "alert" => "Authenticated successfully",
-            "redirect" => url('user/supermarkets')
+            "message" => "Authenticated successfully",
+            "redirect" => url('user/dashboard')
         ];
 
         switch ($user->account) {
@@ -41,14 +42,32 @@ class AuthController extends BaseController
                 $message['redirect'] = url('admin/dashboard');
                 break;
             case 'admin':
-                $supermarket = Supermarket::where('user_id', $user->id)->value('name');
+                $message['redirect'] = url("admin/dashboard");
+                $sup = Supermarket::find($user->has_supermarket)->get('db_name, expired, expires, fee');
+                $supermarket = $sup->db_name;
                 $userSession["supermarket"] = $supermarket;
-                $message['redirect'] = url("supermarket/admin");
+                if($sup->expired == 1)
+                {
+                    $message['redirect'] = url("supermarket/account/expired");
+                    $userSession["expiry_date"] = $sup->expires;
+                    $userSession['fee'] = $sup->fee;
+
+                    session(['guest' => array_to_object($userSession)]);
+                    return response()->json(200, $message);
+                }
                 break;
             default:
-                $message["redirect"] = url('user/supermarkets');
+                $message["redirect"] = url('user/dashboard');
         }
+        User::find($user->id)->update(['status' => 'online']);
+
         session(['user' => array_to_object($userSession)]);
         return response()->json(200, $message);
+    }
+
+    public function logout()
+    {
+        User::find(session('user')->id)->update(['status' => 'offline']);
+        return $this->session()->end();
     }
  }

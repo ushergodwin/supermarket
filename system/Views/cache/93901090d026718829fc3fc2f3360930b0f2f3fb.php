@@ -39,18 +39,34 @@
                 </div>
 
                 <div class="col-lg-8">
-                    <h6 class="mr-5">Most Searched</h6>
+                    <h6 class="mr-5">Most Searched Categories</h6>
                     <div class="card card-horizontal card-default card-md mb-4 mt-2">
-                        <div class="row mt-3 mr-2 ml-2">
-                            <?php $__currentLoopData = $collection; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <div class="col-md-4 mt-1">
-                                    <div class="card card-body shadow mb-3 bg-success">
-                                        <?php echo e($item->category); ?>
-
-                                    </div>
-                                </div>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Name</th>
+                                    <th>No of Searches</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if(!empty($most_searched_categories)): ?>
+                                    <?php
+                                        $i = 0;
+                                    ?>
+                                    <?php $__currentLoopData = $most_searched_categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php
+                                            $i++;
+                                        ?>
+                                        <tr>
+                                            <td><?php echo e($i); ?></td>
+                                            <td><?php echo e($item->key); ?></td>
+                                            <td><?php echo e($item->value); ?></td>
+                                        </tr>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
                     </div>
                     <!-- ends: .card -->
                 </div>

@@ -6,7 +6,7 @@
          <div class="row">
             <div class="col-lg-12">
                <div class="breadcrumb-main">
-                  <h4 class="text-capitalize breadcrumb-title">PRODUCT CATEGORIES</h4>
+                  <h4 class="text-capitalize breadcrumb-title">ADMIN DASHBOARD</h4>
                   <div class="breadcrumb-action justify-content-center flex-wrap">
                      <div class="action-btn">
                         <div class="form-group mb-0">
@@ -67,8 +67,74 @@
                </div>
             </div>
            
-            <div class="col-lg-8">
+            <div class="col-lg-12">
 
+               @if (session('user')->account_type == 'admin')
+                  @if(in_array('view-charts', session('user')->roles))
+                     <div class="row">
+                        <div class="col-lg-6">
+                           <h4><u>Top 10 most searched categories</u></h4>
+                           <div class="loading-chart"></div>
+                           <canvas id="categoriesCanvas" class="shadow mt-3"></canvas>
+                        </div>
+                        <div class="col-lg-6">
+                           <h4><u>Top 10 most searched Items</u></h4>
+                           <div class="loading-chart"></div>
+                           <canvas id="itemsCanvas" class="shadow mt-3"></canvas>
+                        </div>
+                     </div>
+
+                     <div class="row mt-5">
+                        <div class="col-lg-6">
+                           <h4><u>Doughnut Chart showing percentage (%) of top 10 most searched categories</u></h4>
+                           <div class="loading-chart"></div>
+                           <canvas id="pieChartcategoriesCanvas" class="shadow mt-3"></canvas>
+                        </div>
+                        <div class="col-lg-6">
+                           <h4><u>Pie Chart showing percentage (%) of top 10 most searched Items</u></h4>
+                           <div class="loading-chart"></div>
+                           <canvas id="pieChartitemsCanvas" class="shadow mt-3"></canvas>
+                        </div>
+                     </div>
+                  @else 
+                     <div class="alert alert-info">
+                        Oops, you do not have privileges to view content on this page.
+                     </div>
+                  @endif
+               @endif
+
+               @if (session('user')->account_type == 'super')
+               @if(in_array('view-charts', session('user')->roles))
+                  <div class="row">
+                     <div class="col-lg-6">
+                        <h4><u>A Bar graph showing number of supermarket customers and supermarket admins</u></h4>
+                        <div class="loading-chart"></div>
+                        <canvas id="usersBarCanvas" class="shadow mt-3"></canvas>
+                     </div>
+                     <div class="col-lg-6">
+                        <h4><u>A Doughnut graph showing number of percentage supermarket customers and supermarket admins</u></h4>
+                        <div class="loading-chart"></div>
+                        <canvas id="usersChartCanvas" class="shadow mt-3"></canvas>
+                     </div>
+                  </div>
+                  <div class="row mt-3">
+                     <div class="col-lg-6">
+                        <h4><u>A Bar graph showing number of customers per supermarket</u></h4>
+                        <div class="loading-chart"></div>
+                        <canvas id="visitorsBarCanvas" class="shadow mt-3"></canvas>
+                     </div>
+                     <div class="col-lg-6">
+                        <h4><u>A Doughnut graph showing percenatege of customers per supermarket</u></h4>
+                        <div class="loading-chart"></div>
+                        <canvas id="visitorsChartCanvas" class="shadow mt-3"></canvas>
+                     </div>
+                  </div>
+                  <div class="sup-expiry" style="position: fixed; bottom: 10px; right: 0;">
+                     
+                  </div>
+               @endif
+               
+               @endif
             </div>
             <!-- ends: .col-lg-6 -->
          </div>
@@ -76,4 +142,8 @@
    </div>
    <!-- ends: .atbd-page-content -->
 </div>
+@endsection
+@section('scripts')
+   <script src="{{ asset('js/chart.js/Chart.min.js') }}"></script>
+   <script src="{{ asset('js/data-visualization.js') }}"></script>
 @endsection

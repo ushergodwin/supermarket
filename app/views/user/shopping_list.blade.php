@@ -17,11 +17,12 @@
                                         <h5>List Items</h5>
                                         @php
                                             $shoppingListItems = DB('shopping_list_items')->where('shopping_list_id', $item->id)->get();
-                                            $total = 0;
+                                            $total = $no = 0;
                                         @endphp
                                         @if (!empty($shoppingListItems))
                                             <table class="table table-striped table-bordered table-dark">
                                                 <thead>
+                                                    <th>No</th>
                                                     <th>Item Name</th>
                                                     <th>Price</th>
                                                     <th>Location</th>
@@ -31,24 +32,31 @@
                                                     @foreach ($shoppingListItems as $items)
                                                         @php
                                                             $total += $items->item_price;
+                                                            $no++;
                                                         @endphp
                                                         <tr>
+                                                            <td>{{ $no }}</td>
                                                             <td>{{ $items->item_name }}</td>
-                                                            <td>{{ $items->item_price}}</td>
+                                                            <td>{{ number_format($items->item_price, 2)}}</td>
                                                             <td>{{ "column " .  $items->item_column_number . " " . $items->item_position }}</td>
                                                             <td>{{ $items->supermarket }}</td>
                                                         </tr>
                                                     @endforeach
                                                     <tr>
-                                                        <td>TOTAL COST </td>
-                                                        <th colspan="4">{{ number_format($total, 2) }}</th>
+                                                        <td colspan="4">TOTAL COST </td>
+                                                        <th>UGX: {{ number_format($total, 2) }}</th>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         @endif
                                     </div>
                                     <div class="card-footer">
-                                        <button type="button" class="btn btn-success">Mark List Shopped and Completed</button>
+                                        <button type="button" class="btn btn-{{$item->list_status == 'active' ? 'primary' : 'success'}}"
+                                        id="diactivate-list" 
+                                        data-list_id="{{ $item->id }}"
+                                        data-url="{{ url('user/dashboard/lists/diactivate') }}"
+                                        data-_token="{{ _token() }}"
+                                         {{$item->list_status == 'active' ? '' : 'disabled'}}><i class="fa fa-check-circle"></i> {{ $item->list_status == 'active' ? "Mark List Shopped" : "List Shopped" }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -98,5 +106,6 @@
 @section('scripts')
     <script>
         request({form: 'listForm', btn: 'list-btn'});
+        elementDataRequest({selector: 'id', el: 'diactivate-list', method: 'POST'})
     </script>
 @endsection
